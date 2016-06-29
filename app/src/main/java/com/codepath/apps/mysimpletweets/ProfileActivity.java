@@ -47,11 +47,13 @@ public class ProfileActivity extends AppCompatActivity {
         TextView tvTagLine = (TextView) findViewById(R.id.tvTagLine);
         TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
         TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
+        TextView timeStamp = (TextView) findViewById(R.id.timeStamp); //timestamp
         ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
         tvName.setText(user.getName());
         tvTagLine.setText(user.getTagline());
         tvFollowers.setText(user.getFollowersCount() + " Followers");
         tvFollowing.setText(user.getFriendsCount() + " Following");
+        timeStamp.setText(user.getRelativeTimeAgo(user.getCreatedAt()));
         Picasso.with(this).load(user.getProfileImageUrl()).into(ivProfileImage);
 
 

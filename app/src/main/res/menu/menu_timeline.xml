@@ -11,5 +11,12 @@
         android:title="Profile"
         android:onClick="onProfileView"/>
 
+    <item
+        android:id="@+id/miPost"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_post"
+        android:title="Post"
+        android:onClick="onPost"/>
+
 
 </menu>

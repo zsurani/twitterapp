@@ -19,6 +19,7 @@ public class TimelineActivity extends AppCompatActivity {
 
 
     private TweetsListFragment fragmentTweetsList;
+    private final int REQUEST_CODE = 20;
 
 
     @Override
@@ -47,6 +48,11 @@ public class TimelineActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onPost(MenuItem item) {
+        Intent i = new Intent(this, ComposeActivity.class);
+        startActivityForResult(i, REQUEST_CODE);
     }
 
     public class TweetsPagerAdapter extends FragmentPagerAdapter {

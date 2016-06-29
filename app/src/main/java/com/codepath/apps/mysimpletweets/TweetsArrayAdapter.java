@@ -37,6 +37,7 @@ public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
         //timeStamp.setText(tweet.getRelativeTimeAgo());
         tvUserName.setText(tweet.getUser().getScreenName());
         tvBody.setText(tweet.getBody());
+        timeStamp.setText(tweet.getRelativeTimeAgo(tweet.getCreatedAt()));
         ivProfileImage.setImageResource(android.R.color.transparent);
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
         return convertView;

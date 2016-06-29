@@ -21,6 +21,7 @@ public class User {
     private String tagline;
     private int followersCount;
     private int followingsCount;
+    private String createdAt;
 
     public String getTagline() {
         return tagline;
@@ -50,6 +51,10 @@ public class User {
         return profileImageUrl;
     }
 
+    public String getCreatedAt() { return createdAt; }
+
+
+
     public String getRelativeTimeAgo(String rawJsonDate) {
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat sf = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
@@ -78,6 +83,8 @@ public class User {
             u.tagline = json.getString("description");
             u.followersCount = json.getInt("followers_count");
             u.followingsCount = json.getInt("friends_count");
+            u.createdAt = json.getString("created_at");
+
 
         } catch (JSONException e) {
             e.printStackTrace();
