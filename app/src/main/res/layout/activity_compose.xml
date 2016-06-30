@@ -17,12 +17,23 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="155dp" />
 
+    <requestFocus></requestFocus>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Post"
         android:onClick="onReturn"
         android:id="@+id/btnPost"
+        android:layout_below="@+id/etPost"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/lblCount"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
