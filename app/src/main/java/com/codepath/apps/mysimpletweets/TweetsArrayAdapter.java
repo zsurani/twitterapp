@@ -1,6 +1,7 @@
 package com.codepath.apps.mysimpletweets;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
         }
+
         ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
         TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
@@ -39,9 +41,22 @@ public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
         tvBody.setText(tweet.getBody());
         timeStamp.setText(tweet.getRelativeTimeAgo(tweet.getCreatedAt()));
         ivProfileImage.setImageResource(android.R.color.transparent);
+
+        View.OnClickListener clickListener;
+
+        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getContext(), UserProfileActivity.class);
+                getContext().startActivity(intent);
+            }
+        });
+
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
         return convertView;
 
     }
+
 }
 

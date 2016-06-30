@@ -4,6 +4,7 @@ import android.text.format.DateUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,16 +13,21 @@ import java.util.Locale;
 /**
  * Created by zsurani on 6/27/16.
  */
+
+@Parcel
 public class User {
 
-    private String name;
-    private long uid;
-    private String screenName;
-    private String profileImageUrl;
-    private String tagline;
-    private int followersCount;
-    private int followingsCount;
-    private String createdAt;
+     String name;
+     long uid;
+     String screenName;
+     String profileImageUrl;
+     String tagline;
+     int followersCount;
+     int followingsCount;
+     String createdAt;
+
+    public User() {
+    }
 
     public String getTagline() {
         return tagline;

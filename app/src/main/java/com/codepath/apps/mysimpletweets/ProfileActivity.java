@@ -28,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJSON(response);
-                getSupportActionBar().setTitle("0" + user.getScreenName());
+                getSupportActionBar().setTitle(user.getScreenName());
                 populateProfileHeader(user); 
             }
         });

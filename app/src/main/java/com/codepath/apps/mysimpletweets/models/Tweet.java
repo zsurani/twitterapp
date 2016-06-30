@@ -5,6 +5,7 @@ import android.text.format.DateUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -14,12 +15,37 @@ import java.util.Locale;
 /**
  * Created by zsurani on 6/27/16.
  */
+
+@Parcel
 public class Tweet {
-    private String body;
-    private User user;
-    private long uid;
-    private String name;
-    private String createdAt;
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Tweet() {
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+     String body;
+     User user;
+     long uid;
+     String name;
+     String createdAt;
 
     public String getBody() {
         return body;
