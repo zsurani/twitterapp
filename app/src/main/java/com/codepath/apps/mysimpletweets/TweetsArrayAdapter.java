@@ -12,25 +12,30 @@ import android.widget.TextView;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 import com.squareup.picasso.Picasso;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 /**
  * Created by zsurani on 6/27/16.
  */
 public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
+
+    Tweet tweet;
+
     public TweetsArrayAdapter(Context context, List<Tweet>tweets) {
         super(context, android.R.layout.simple_list_item_1, tweets);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Tweet tweet = getItem(position);
+        tweet = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
         }
 
-        ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
-        TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
+        final ImageView ivProfileImage = (ImageView) convertView.findViewById(R.id.ivProfileImage);
+        final TextView tvUserName = (TextView) convertView.findViewById(R.id.tvUserName);
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
         TextView timeStamp = (TextView) convertView.findViewById(R.id.timeStamp);
@@ -44,11 +49,16 @@ public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
 
         View.OnClickListener clickListener;
 
+        ivProfileImage.setTag(tweet.getUser());
+
         ivProfileImage.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
 
                 Intent intent = new Intent(getContext(), UserProfileActivity.class);
+
+                intent.putExtra("user", Parcels.wrap(ivProfileImage.getTag()));
+                //Toast.makeText(getContext(), tweet.getUser().getName(), Toast.LENGTH_SHORT).show();
                 getContext().startActivity(intent);
             }
         });

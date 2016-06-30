@@ -75,5 +75,5 @@
         android:layout_below="@+id/llCounts"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/flContainer"></FrameLayout>
+        android:id="@+id/fContainer"></FrameLayout>
 </RelativeLayout>
