@@ -57,10 +57,6 @@ public class UserProfileActivity extends AppCompatActivity {
         tvFollowing.setText(user.getFriendsCount() + " Following");
         //timeStamp.setText(user.getRelativeTimeAgo(user.getCreatedAt()));
         Picasso.with(this).load(user.getProfileImageUrl()).into(ivProfileImage);
-
-
-
-
     }
 
 
