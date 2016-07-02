@@ -64,8 +64,8 @@
         android:layout_height="20dp"
         android:layout_below="@+id/tvUserName"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:src="@mipmap/ic_favorite" />
+        android:layout_alignParentEnd="true" />
+        <!--android:src="@mipmap/ic_favorite" />-->
 
 
 </RelativeLayout>

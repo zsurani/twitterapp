@@ -130,16 +130,25 @@ public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
         final ImageView favoriter = (ImageView) convertView.findViewById(R.id.imageView);
         favoriter.setTag(tweet.getUid());
 
+        if (!tweet.getFavorited()) {
+            Picasso.with(getContext()).load(R.mipmap.ic_favorite).into(favoriter);
+        }
+        else if (tweet.getFavorited()) {
+            Picasso.with(getContext()).load(R.mipmap.ic_redfavorited).into(favoriter);
+        }
 
-        if (!pressed) {
-            pressed = true;
+        if (!tweet.getRetweeted()) {
+
             favoriter.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    tweet.setFavorited(true);
+
                     client = TwitterApplication.getRestClient();
                     client.favorite((Long) favoriter.getTag(), new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
                             Log.d("DEBUG", json.toString());
+                            Picasso.with(getContext()).load(R.mipmap.ic_redfavorited).into(favoriter);
                         }
 
                         @Override
@@ -152,15 +161,18 @@ public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
             });
         }
 
-        if (pressed) {
-            pressed = false;
+        else {
+
             favoriter.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
+                    tweet.setFavorited(false);
+
                     client = TwitterApplication.getRestClient();
                     client.unfavorite((Long) favoriter.getTag(), new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
                             Log.d("DEBUG", json.toString());
+                            Picasso.with(getContext()).load(R.mipmap.ic_favorite).into(favoriter);
                         }
 
                         @Override

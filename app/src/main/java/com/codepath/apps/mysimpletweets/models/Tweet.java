@@ -34,8 +34,7 @@ public class Tweet {
         this.name = name;
     }
 
-    public Tweet() {
-    }
+    public Tweet() {}
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
@@ -47,6 +46,7 @@ public class Tweet {
      String name;
      String createdAt;
      boolean retweeted;
+     boolean favorited;
 
     public String getBody() {
         return body;
@@ -70,6 +70,10 @@ public class Tweet {
 
     public void setRetweeted(boolean state) { retweeted = state; }
 
+    public boolean getFavorited() { return favorited; }
+
+    public void setFavorited(boolean state) { favorited = state; }
+
 
     public static Tweet fromJSON(JSONObject jsonObject) {
         Tweet tweet = new Tweet();
@@ -79,6 +83,7 @@ public class Tweet {
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
             tweet.retweeted = jsonObject.getBoolean("retweeted");
+            tweet.favorited = jsonObject.getBoolean("favorited");
             //tweet.name = User.fromJSON(jsonObject.getJSONObject(""));
         } catch (JSONException e) {
             e.printStackTrace();
