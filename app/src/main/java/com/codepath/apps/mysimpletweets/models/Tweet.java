@@ -46,6 +46,7 @@ public class Tweet {
      long uid;
      String name;
      String createdAt;
+     boolean retweeted;
 
     public String getBody() {
         return body;
@@ -65,6 +66,10 @@ public class Tweet {
 
     public String getName() { return name; }
 
+    public boolean getRetweeted() { return retweeted; }
+
+    public void setRetweeted(boolean state) { retweeted = state; }
+
 
     public static Tweet fromJSON(JSONObject jsonObject) {
         Tweet tweet = new Tweet();
@@ -73,6 +78,7 @@ public class Tweet {
             tweet.uid = jsonObject.getLong("id");
             tweet.createdAt = jsonObject.getString("created_at");
             tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
+            tweet.retweeted = jsonObject.getBoolean("retweeted");
             //tweet.name = User.fromJSON(jsonObject.getJSONObject(""));
         } catch (JSONException e) {
             e.printStackTrace();

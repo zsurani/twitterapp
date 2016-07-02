@@ -26,7 +26,6 @@ import cz.msebera.android.httpclient.Header;
  */
 public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
 
-    Tweet tweet;
     TwitterClient client;
     boolean pressed = false;
 
@@ -36,7 +35,7 @@ public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        tweet = getItem(position);
+        final Tweet tweet = getItem(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
         }
@@ -46,7 +45,6 @@ public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
         TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
         TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
         TextView timeStamp = (TextView) convertView.findViewById(R.id.timeStamp);
-
 
 
         tvName.setText(tweet.getUser().getName());
@@ -72,28 +70,62 @@ public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
 
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfileImage);
 
-
         final ImageView retweeter = (ImageView) convertView.findViewById(R.id.button);
         retweeter.setTag(tweet.getUid());
 
-        retweeter.setOnClickListener(new View.OnClickListener(){
-            public void onClick (View v) {
+        if (!tweet.getRetweeted()) {
+            Picasso.with(getContext()).load(R.mipmap.ic_retweet).into(retweeter);
+        }
+        else if (tweet.getRetweeted()) {
+            Picasso.with(getContext()).load(R.mipmap.ic_redretweeted).into(retweeter);
+        }
 
-                client = TwitterApplication.getRestClient();
-                client.reTweet ((Long) retweeter.getTag(), new JsonHttpResponseHandler() {
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
-                        Log.d("DEBUG", json.toString());
-                    }
+        if (!tweet.getRetweeted()) {
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                        Log.d("DEBUG", errorResponse.toString());
-                    }
-                });
+            retweeter.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    tweet.setRetweeted(true);
 
-            }
-        });
+                    client = TwitterApplication.getRestClient();
+                    client.reTweet((Long) retweeter.getTag(), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
+                            Log.d("DEBUG", json.toString());
+                            Picasso.with(getContext()).load(R.mipmap.ic_redretweeted).into(retweeter);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Log.d("DEBUG", errorResponse.toString());
+                        }
+                    });
+
+                }
+            });
+        }
+        else {
+
+            retweeter.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    tweet.setRetweeted(false);
+
+                    client = TwitterApplication.getRestClient();
+                    client.unreTweet((Long) retweeter.getTag(), new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
+                            Log.d("DEBUG", json.toString());
+                            Picasso.with(getContext()).load(R.mipmap.ic_retweet).into(retweeter);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Log.d("DEBUG", errorResponse.toString());
+                        }
+                    });
+
+                }
+            });
+        }
 
         final ImageView favoriter = (ImageView) convertView.findViewById(R.id.imageView);
         favoriter.setTag(tweet.getUid());
@@ -119,7 +151,8 @@ public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
                 }
             });
         }
-        else {
+
+        if (pressed) {
             pressed = false;
             favoriter.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -139,6 +172,7 @@ public class TweetsArrayAdapter  extends ArrayAdapter<Tweet> {
                 }
             });
         }
+
 
 
         return convertView;
